@@ -1,0 +1,14 @@
+.article {
+
+    border: 1px black solid;
+}
+
+.article div{
+
+    border: 2px red solid;
+}
+
+img {
+
+    width: 20%;
+}
