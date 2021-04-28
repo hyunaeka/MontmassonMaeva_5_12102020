@@ -1,6 +1,8 @@
+// Selection de la classeou injecter le code
+
 const article = document.querySelector('.article');
 
-// url http://localhost:3000/api/teddies  https://ab-p5-api.herokuapp.com/api/teddies
+// Récupération des données serveurs
 
 fetch('http://localhost:3000/api/teddies')
     .then(response => { 
@@ -12,11 +14,16 @@ fetch('http://localhost:3000/api/teddies')
 
 .then(data => {
 
+
     for (const element of data) {
         console.log(element);}
     
+// Récupération des données pour chaque élément (ours en peluche) + affichage des éléments
 
     for( i = 0; i < data.length; i++ ) {
+
+
+        // Création de l'architecture
 
         let newDiv = document.createElement('div');
         let newProductImg = document.createElement("img")
@@ -24,6 +31,8 @@ fetch('http://localhost:3000/api/teddies')
         let newPriceCarte = document.createElement('h3');
         let newButtonMore = document.createElement('a');
         let newButtonCart = document.createElement('a');
+
+        // Affichagedes données serveurs
 
         newTitreCarte.innerText = data[i].name;
         newPriceCarte.innerHTML = data[i].price/100 + " €";
@@ -40,11 +49,7 @@ fetch('http://localhost:3000/api/teddies')
 
         newProductImg.setAttribute("src", data[i].imageUrl);
         newButtonMore.setAttribute("href", "productpage.html?id=" + data[i]._id);
+        newButtonCart.setAttribute("href", "panier.html");
 
     }
 })
-
-
-
-//        let newId = [data[i]._id];
-//console.log(newId);
