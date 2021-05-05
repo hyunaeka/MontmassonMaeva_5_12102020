@@ -258,7 +258,7 @@ if (firstNameControl() && lastNameControl() && cityControl() && zipCodeControl()
         localStorage.setItem("responseID", response.orderId);
         
 
-                //Confirmation de la commande
+                //Confirmation de la commande et redirection vers la page confirmation
 
                 window.location = "confirmation.html";
                 

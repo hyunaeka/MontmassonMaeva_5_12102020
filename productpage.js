@@ -1,4 +1,4 @@
-// Récupération de l'ID produit via l'URL avec la méthode queryString
+// Récupération de l'ID produit via l'URL avec la méthode window location
 
 const queryString_url_id = window.location.search;
 console.log(queryString_url_id); 
@@ -79,7 +79,7 @@ fetch('http://localhost:3000/api/teddies/'+ id)
 
         }    
 
-                 //---------------------- Gestion données du panier --------------------------
+//------------------------------------------------------------- Gestion données du panier ------------------------------------------------
 
 //récupération des données - selection de l'id formulaire et de l'option 
 
