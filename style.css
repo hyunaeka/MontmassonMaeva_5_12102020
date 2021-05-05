@@ -1,19 +1,38 @@
-.article {
 
-    border: 1px black solid;
-}
-
-.article div{
-
-    border: 2px red solid;
-}
-
-img {
-
-    width: 20%;
-}
 
 .wrong {
 
     color: red;
+}
+
+
+.navbar-custom
+{
+    background-color: purple;
+    color: white;
+    padding: 15px;
+}
+
+.btn-primary {
+    background-color: purple;
+}
+
+
+.container {
+
+    background-color: #efd7f742;
+}
+
+.badge {
+ background-color: purple;
+}
+
+.card-img-top {
+
+    height: 17em;
+    object-fit: cover;
+}
+
+main{
+    height: 80vh;
 }

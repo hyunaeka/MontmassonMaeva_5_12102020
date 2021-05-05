@@ -27,10 +27,14 @@ fetch('http://localhost:3000/api/teddies')
 
         let newDiv = document.createElement('div');
         let newProductImg = document.createElement("img")
-        let newTitreCarte = document.createElement('h2');
-        let newPriceCarte = document.createElement('h3');
+        let newTitreCarte = document.createElement('h4');
+        let newPriceCarte = document.createElement('p');
         let newButtonMore = document.createElement('a');
         let newButtonCart = document.createElement('a');
+        let containerCard = document.createElement('div');
+        let bodyCard = document.createElement('div');
+
+        
 
         // Affichagedes données serveurs
 
@@ -40,16 +44,24 @@ fetch('http://localhost:3000/api/teddies')
         newButtonMore.innerText = "Voir plus";
         
 
-        newDiv.appendChild(newTitreCarte);
-        newDiv.appendChild(newPriceCarte);
-        newDiv.appendChild(newProductImg);
-        newDiv.appendChild(newButtonCart);
-        newDiv.appendChild(newButtonMore);
         article.appendChild(newDiv);
-
+        newDiv.appendChild(containerCard);
+        containerCard.appendChild(newProductImg);
+        containerCard.appendChild(bodyCard);
+        bodyCard.appendChild(newTitreCarte);
+        bodyCard.appendChild(newPriceCarte);
+        bodyCard.appendChild(newButtonMore);
+  
+        newDiv.setAttribute("class", "col-12 col-md-6 col-lg-4  mb-4");
         newProductImg.setAttribute("src", data[i].imageUrl);
         newButtonMore.setAttribute("href", "productpage.html?id=" + data[i]._id);
         newButtonCart.setAttribute("href", "panier.html");
+        containerCard.setAttribute("class","card h-100" );
+        newProductImg.setAttribute("class", "card-img-top "); 
+        bodyCard.setAttribute("class","card-body");
+        newTitreCarte.setAttribute("class", "card-title");
+        newButtonMore.setAttribute("class", "btn btn-info")
+        newPriceCarte.setAttribute("class","card-text");
 
     }
 })

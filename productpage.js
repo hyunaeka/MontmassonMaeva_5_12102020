@@ -24,15 +24,16 @@ fetch('http://localhost:3000/api/teddies/'+ id)
 
 // Création de la fiche produit 
 
-        const article = document.querySelector('.article-produit')   
+        const article = document.querySelector('.article-container')   
 
         let newDiv = document.createElement('div');
         let newProductImg = document.createElement("img")
         let newTitreCarte = document.createElement('h2');
-        let newPriceCarte = document.createElement('h3');
+        let newPriceCarte = document.createElement('p');
         let newDescription = document.createElement('p');
-        let newButtonCart = document.createElement('button');
         let selectOption = document.createElement("select");
+        let newButtonCart = document.createElement('button');
+        let containerInfo = document.createElement("div");
         
         
 
@@ -41,21 +42,27 @@ fetch('http://localhost:3000/api/teddies/'+ id)
         newButtonCart.innerText = "Ajouter au Panier";
         newDescription.innerText = data.description;
         
-
-        newDiv.appendChild(newTitreCarte);
-        newDiv.appendChild(newPriceCarte);
         newDiv.appendChild(newProductImg);
-        newDiv.appendChild(newDescription);
-        newDiv.appendChild(selectOption);
-        newDiv.appendChild(newButtonCart);
+        article.appendChild(containerInfo);
+        containerInfo.appendChild(newTitreCarte);
+        
+        containerInfo.appendChild(newDescription);
+        containerInfo.appendChild(newPriceCarte);
+        containerInfo.appendChild(selectOption);
+        containerInfo.appendChild(newButtonCart);
         article.appendChild(newDiv);
 
         newProductImg.setAttribute("src", data.imageUrl);
         selectOption.setAttribute("label", "option_product");
         selectOption.setAttribute("id", "color");
-        newButtonCart.setAttribute("id", "cart_btn")
-        newButtonCart.setAttribute("type", "submit")
-        newButtonCart.setAttribute("name", "cart_btn")
+        selectOption.setAttribute("class","p-2")
+        newButtonCart.setAttribute("id", "cart_btn");
+        newButtonCart.setAttribute("type", "submit");
+        newButtonCart.setAttribute("name", "cart_btn");
+        newButtonCart.setAttribute("class", "btn btn-info m-4");
+        newDiv.setAttribute("class","left-column col-6");
+        newProductImg.setAttribute("class","img-fluid")
+        containerInfo.setAttribute("class","right-column col-6 p-5")
 
 
 // Mise en place des options en récupérant les données serveurs
@@ -101,6 +108,8 @@ fetch('http://localhost:3000/api/teddies/'+ id)
                 prix: data.price/100
             }
             console.log(ProductChoice);
+
+            alert(`Le produit ${data.name} ${customerChoice} a bien été ajouté au panier`);
 
 //Variable pour récupérer les clés et valeurs dans le local storage
 

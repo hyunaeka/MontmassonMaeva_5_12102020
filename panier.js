@@ -1,17 +1,18 @@
+//---------------------- Récupération des données dans le local storage ---------------
 
 let saveCart = JSON.parse(localStorage.getItem("cart"));
             console.log(saveCart);
 
-// Afficher le panier 
+// ---------- Afficher le panier --------------
 
 
 let cartArea = document.getElementById('cart-area');
 const bodyCart = document.querySelector('.body-cart');
 
 
-//Récupération des données pour le panier et création de la structure
+//-------------------  Récupération des données pour le panier et création de la structure  ---------------
 
-if (saveCart === null){
+if (saveCart == null){
     
    cartArea.innerHTML="Mon panier est vide";
 
@@ -20,47 +21,43 @@ if (saveCart === null){
 
     for (let j = 0; j < saveCart.length; j++) {
 
-    let newDiv = document.createElement('div')
-    let newProductTitle = document.createElement('p')
-    let newProductOption = document.createElement('p')
-    let newProductPrice = document.createElement('p')
-    let clearCart = document.createElement('button')
-    let newProductImg = document.createElement('img')
-    
+    let newDiv = document.createElement('ul')
+    let newProductTitle = document.createElement('li')
+    let newProductOption = document.createElement('li')
+    let newProductPrice = document.createElement('span') 
     
     newProductTitle.innerHTML = saveCart[j].productName;
     newProductOption.innerHTML = " Couleur:  " + saveCart[j].productOption;
     newProductPrice.innerHTML = saveCart[j].prix + " €";
-    clearCart.innerText = "x" ;
 
-    newDiv.appendChild(newProductImg);
     newDiv.appendChild(newProductTitle);
-    newDiv.appendChild(newProductOption);
-    newDiv.appendChild(newProductPrice);
-    newDiv.appendChild(clearCart);
+    newProductTitle.appendChild(newProductOption);
+    newProductTitle.appendChild(newProductPrice);
     bodyCart.appendChild(newDiv);
 
-
-    newProductImg.setAttribute("src", saveCart[j].productImg);
-    clearCart.setAttribute("class", "clear-button")
+    newProductTitle.setAttribute("class","list-group-item d-flex justify-content-between align-items-center")
+    newProductPrice.setAttribute("class","badge badge-pill badge-info")
+    newProductOption.setAttribute("class","list-group-item")
     };
 
 
     
 }
 
-// vider le panier
+//  --------------    vider le panier ---------------
 
 
 let newDiv = document.createElement('div');
+let btnPosition = document.createElement('div');
 let clearAllCartBtn = document.createElement('button');
 clearAllCartBtn.innerText = "Vider le panier";
-newDiv.appendChild(clearAllCartBtn);
+
+newDiv.appendChild(btnPosition);
+btnPosition.appendChild(clearAllCartBtn);
 bodyCart.appendChild(newDiv);
 clearAllCartBtn.setAttribute("id", "clear-all-cart");
-
-
-
+clearAllCartBtn.setAttribute("class","btn btn-info")
+btnPosition.setAttribute("class","d-flex flex-row-reverse mb-3")
 
 
 clearAllCartBtn.addEventListener('click', (e)=>{
@@ -76,11 +73,13 @@ clearAllCartBtn.addEventListener('click', (e)=>{
 
     alert("Les produits ont bien été supprimé du panier");
 
+    // Redirection vers la page panier( vidée )
+
     window.location.href ="panier.html";
 })
 
 
-//Panier total 
+// ------------- total du panier ------------
 
 
 let totalPriceInCart = []
@@ -106,8 +105,10 @@ displayTotalPrice.innerText = "Total : " + totalPrice + " €";
 newDiv.appendChild(displayTotalPrice);
 bodyCart.appendChild(newDiv);
 
+displayTotalPrice.setAttribute("class","d-flex flex-row-reverse list-group-item p-3")
 
-//formulaire javascript 
+
+// ---------------------------- formulaire javascript ---------------------------------
 
 const form = document.getElementById('customerform');
 const firstname = document.getElementById('firstname');
@@ -160,7 +161,6 @@ const theFirstName = firstname.value;
 if(/^([A-Za-z]{2,20})?([-]{0,1})?([A-Za-z]{2,20})$/.test(theFirstName)){
 
 document.querySelector("#firstname-verification").textContent = "";
-console.log("ok");
 return true;
 }else{
     document.querySelector("#firstname-verification").textContent = "*Saisissez votre prénom";
@@ -174,11 +174,9 @@ function lastNameControl(){
     if(/^[A-Za-z]{2,20}$/.test(theLastName)){
 
     document.querySelector("#lastname-verification").textContent = "";
-    console.log("ok");
     return true;
     }else{
         document.querySelector("#lastname-verification").textContent = "*Saisissez votre Nom";
-        alert("le nom ne marche pas !")
         console.log("ko")
         return false;
     }
@@ -190,11 +188,9 @@ function addressControl(){
 
 
     document.querySelector("#address-verification").textContent = "";
-    console.log("ok");
     return true;
     }else{
         document.querySelector("#address-verification").textContent = "*Saisissez votre adresse";
-        alert("l'adresse ne marche pas")
         console.log("ko")
         return false;
     }
@@ -206,11 +202,9 @@ function cityControl(){
     if(/^[A-Za-z]{2,20}$/.test(theCity)){
         
     document.querySelector("#city-verification").textContent = "";
-    console.log("ok");
     return true;
      }else{
         document.querySelector("#city-verification").textContent = "*Saisissez votre ville";
-        alert("la ville ne marche pas !")
         console.log("ko")
         return false;
         }
@@ -221,11 +215,9 @@ function zipCodeControl(){
     if(/^[0-9]{5}$/.test(theZipCode)){
                 
     document.querySelector("#zipcode-verification").textContent = "";
-    console.log("ok");
     return true;
      }else{
         document.querySelector("#zipcode-verification").textContent = "*Saisissez votre code postale";
-        alert("le code postale ne marche pas !")
         console.log("ko")
         return false;
         }
@@ -236,11 +228,9 @@ function zipCodeControl(){
      if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(theEmail)){
            
     document.querySelector("#email-verification").textContent = "";
-    console.log("ok");
     return true;
      }else{
         document.querySelector("#email-verification").textContent = "*Saisissez votre email";
-        alert("l'email ne marche pas' !")
         console.log("ko")
         return false;
         }
@@ -248,6 +238,7 @@ function zipCodeControl(){
 
 if (firstNameControl() && lastNameControl() && cityControl() && zipCodeControl() && emailControl() && addressControl()){
 
+    localStorage.setItem("Total",JSON.stringify(totalPrice));
     localStorage.setItem("contact", JSON.stringify(order));
     let sendToServer =   fetch("http://localhost:3000/api/teddies/order", {
             method: 'POST',
@@ -261,6 +252,22 @@ if (firstNameControl() && lastNameControl() && cityControl() && zipCodeControl()
         .then(response => {
             
             console.log(response.orderId + " ORDER ID");
+
+        // Récupérer l'ID 
+
+        localStorage.setItem("responseID", response.orderId);
+        
+
+                //Confirmation de la commande
+
+                window.location = "confirmation.html";
+                
+        })
+
+
+
+        .catch((e) => {
+            console.log(e);
         })
 } else {
 
@@ -269,36 +276,5 @@ if (firstNameControl() && lastNameControl() && cityControl() && zipCodeControl()
 
 //----------- données envoyées
 
- /*let sendToServer =   fetch("http://localhost:3000/api/teddies/order", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            body: JSON.stringify(order),
-        })
-        .then(response => {
-            console.log(response);
-            return response.json();
-        })
-    */
-
-
-
 
 });
-
-
-
-
-
-// local storage 
-
-/*localStorage.setItem("contact", JSON.stringify(order));
-localStorage.setItem("product", JSON.stringify(idProductSaveCart))
-
-
-console.log(JSON.stringify(sendToServer));
-postOrder(JSON.stringify(sendToServer));*/
-
-// envoyer au serveur 
