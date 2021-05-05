@@ -78,7 +78,7 @@ if (saveCart == null) {
     window.location.href = "panier.html";
   });
 
-  // --------------------------- Récupération du prix des articles pour afficher le total ---------------------
+  // --------------------------- Récupération du prix des articles ---------------------
 
   let totalPriceInCart = [];
 
@@ -86,8 +86,9 @@ if (saveCart == null) {
     let priceProductInCart = saveCart[k].prix;
 
     totalPriceInCart.push(priceProductInCart);
-    console.log(totalPriceInCart);
   }
+  
+// ----------------- Calcul du prix total des articles ---------------
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   const totalPrice = totalPriceInCart.reduce(reducer, 0);
